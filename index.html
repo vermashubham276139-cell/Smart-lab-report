@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Smart Path Lab Report With Health Analysis</title>
+<style>
+    body { font-family: Arial; background: #f0f0f0; padding: 20px; }
+    .container { max-width: 900px; margin: auto; background: #fff; padding: 25px;
+                 border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.2); }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    th, td { border: 1px solid #999; padding: 8px; }
+    th { background: #eee; }
+    .section-title { background: black; color: white; padding: 8px; font-weight: bold; }
+    label { display: block; margin-top: 8px; }
+    input { width: 100%; padding: 8px; }
+    button { padding: 10px; margin-top: 10px; width: 100%; font-size: 16px; background: #007bff; color: #fff;
+             border: none; border-radius: 5px; cursor: pointer; }
+    .analysis-box { padding: 15px; background: #fafafa; border-left: 4px solid #007bff; margin-top: 20px; }
+    .safe-note { font-size: 13px; color: #555; margin-top: 10px; }
+</style>
+</head>
+
+<body>
+<div class="container">
+    <h2>Smart Path Lab Report Generator</h2>
+
+    <h3>Enter Patient Details</h3>
+
+    <label>Name</label><input id="name">
+    <label>Lab Number</label><input id="labno">
+    <label>Age</label><input id="age">
+    <label>Gender</label><input id="gender">
+    <label>Referred By</label><input id="refby">
+
+    <!-- ⭐ BMI INPUTS -->
+    <label>Weight (kg)</label><input id="weight">
+    <label>Height (meters)</label><input id="height">
+
+    <hr>
+    <h3>Enter CBC Values</h3>
+
+    <label>Hemoglobin</label><input id="hemoglobin">
+    <label>PCV</label><input id="pcv">
+    <label>RBC Count</label><input id="rbc">
+    <label>MCV</label><input id="mcv">
+    <label>MCH</label><input id="mch">
+    <label>MCHC</label><input id="mchc">
+    <label>RDW</label><input id="rdw">
+    <label>TLC</label><input id="tlc">
+    <label>Neutrophils (%)</label><input id="neutro">
+    <label>Lymphocytes (%)</label><input id="lymph">
+    <label>Monocytes (%)</label><input id="mono">
+    <label>Eosinophils (%)</label><input id="eos">
+    <label>Basophils (%)</label><input id="baso">
+
+    <label>Abs. Neutrophils</label><input id="absneutro">
+    <label>Abs. Lymphocytes</label><input id="abslymph">
+    <label>Abs. Monocytes</label><input id="absmono">
+    <label>Abs. Eosinophils</label><input id="abseos">
+    <label>Abs. Basophils</label><input id="absbaso">
+    <label>Platelet Count</label><input id="platelets">
+
+    <button onclick="generateReport()">Generate Report</button>
+
+    <div id="output"></div>
+</div>
+
+<script>
+function generateReport() {
+    // Collect Input
+    const name = document.getElementById("name").value;
+    const labno = document.getElementById("labno").value;
+    const age = document.getElementById("age").value;
+    const gender = document.getElementById("gender").value;
+    const refby = document.getElementById("refby").value;
+
+    // ⭐ BMI COLLECTION
+    const weight = parseFloat(document.getElementById("weight").value);
+    const height = parseFloat(document.getElementById("height").value);
+
+    // ⭐ BMI COMPUTATION
+    let bmi = 0;
+    let bmiStatus = "";
+    if (weight > 0 && height > 0) {
+        bmi = (weight / (height * height)).toFixed(2);
+
+        if (bmi < 18.5) bmiStatus = "Underweight — Increase nutritious calorie intake.";
+        else if (bmi < 24.9) bmiStatus = "Normal BMI — Maintain healthy lifestyle.";
+        else if (bmi < 29.9) bmiStatus = "Overweight — Consider exercise, reduce sugar & fats.";
+        else bmiStatus = "Obese — Consultation recommended for weight management.";
+    }
+
+    // ⭐ DAILY CALORIE REQUIREMENT (TDEE)
+    let calories = 0;
+    if (weight > 0 && height > 0 && age > 0) {
+        let bmr = 0;
+        if (gender.toLowerCase() === "male") {
+            bmr = 10 * weight + 6.25 * (height * 100) - 5 * age + 5;
+        } else {
+            bmr = 10 * weight + 6.25 * (height * 100) - 5 * age - 161;
+        }
+        calories = Math.round(bmr * 1.4); // moderate default
+    }
+
+    // ⭐ CALORIE SUGGESTION TEXT
+    let calorieSuggestion = "";
+    if (bmi < 18.5) {
+        calorieSuggestion = "Increase calorie intake with nuts, dairy, peanut butter, rice, bananas, ghee.";
+    } 
+    else if (bmi < 24.9) {
+        calorieSuggestion = "Maintain balanced calories: fruits, vegetables, lean protein, whole grains.";
+    } 
+    else if (bmi < 29.9) {
+        calorieSuggestion = "Reduce sugar and fried foods; increase fiber & walk 30–45 minutes daily.";
+    } 
+    else {
+        calorieSuggestion = "Reduce carbs & sugary drinks; consult professional for weight management.";
+    }
+
+    const c = {
+        hemoglobin: parseFloat(document.getElementById("hemoglobin").value),
+        pcv: parseFloat(document.getElementById("pcv").value),
+        rbc: parseFloat(document.getElementById("rbc").value),
+        mcv: parseFloat(document.getElementById("mcv").value),
+        mch: parseFloat(document.getElementById("mch").value),
+        mchc: parseFloat(document.getElementById("mchc").value),
+        rdw: parseFloat(document.getElementById("rdw").value),
+        tlc: parseFloat(document.getElementById("tlc").value),
+        neutro: parseFloat(document.getElementById("neutro").value),
+        lymph: parseFloat(document.getElementById("lymph").value),
+        mono: parseFloat(document.getElementById("mono").value),
+        eos: parseFloat(document.getElementById("eos").value),
+        baso: parseFloat(document.getElementById("baso").value),
+        absneutro: parseFloat(document.getElementById("absneutro").value),
+        abslymph: parseFloat(document.getElementById("abslymph").value),
+        absmono: parseFloat(document.getElementById("absmono").value),
+        abseos: parseFloat(document.getElementById("abseos").value),
+        absbaso: parseFloat(document.getElementById("absbaso").value),
+        platelets: parseFloat(document.getElementById("platelets").value)
+    };
+
+    // Reference Ranges
+    const ref = {
+        hemoglobin: [13, 17],
+        pcv: [40, 50],
+        rbc: [4.5, 5.5],
+        mcv: [80, 100],
+        mch: [27, 32],
+        mchc: [32, 35],
+        rdw: [11.5, 14.5],
+        tlc: [4, 10],
+        platelets: [150, 450],
+    };
+
+    let analysis = [];
+
+    function checkLowHigh(value, range, name, suggestionLow, suggestionHigh) {
+        if (value < range[0]) {
+            analysis.push(`<b>${name} is LOW.</b> <br>${suggestionLow}`);
+        } 
+        else if (value > range[1]) {
+            analysis.push(`<b>${name} is HIGH.</b> <br>${suggestionHigh}`);
+        }
+    }
+
+    // CBC Checks
+    checkLowHigh(c.hemoglobin, ref.hemoglobin,"Hemoglobin",
+        "Consider iron-rich foods like spinach, beetroot, lentils, eggs, lean meats.",
+        "Stay hydrated; consult a professional if symptoms occur."
+    );
+    checkLowHigh(c.pcv, ref.pcv,"PCV / Hematocrit",
+        "Low PCV improves with iron, folate, and B12 foods.",
+        "High PCV may relate to dehydration — drink more water."
+    );
+    checkLowHigh(c.rbc, ref.rbc,"RBC Count",
+        "Increase iron and B12 foods like beans, eggs, milk.",
+        "High RBC may need hydration; consult doctor if persistent."
+    );
+    checkLowHigh(c.mcv, ref.mcv,"MCV",
+        "Low MCV suggests iron deficiency.",
+        "High MCV suggests B12/folate deficiency."
+    );
+    checkLowHigh(c.mch, ref.mch,"MCH",
+        "Low MCH: increase iron intake.",
+        "High MCH: check B12/folate intake."
+    );
+    checkLowHigh(c.mchc, ref.mchc,"MCHC",
+        "Low MCHC: iron deficiency likely.",
+        "High MCHC: dehydration possible."
+    );
+    checkLowHigh(c.rdw, ref.rdw,"RDW",
+        "Low RDW is usually fine.",
+        "High RDW: varied cell size — consider iron, B12, folate foods."
+    );
+    checkLowHigh(c.tlc, ref.tlc,"White Blood Cell Count",
+        "Low WBC: vitamin C foods and rest.",
+        "High WBC: may indicate infection — drink water & monitor."
+    );
+    checkLowHigh(c.platelets, ref.platelets,"Platelet Count",
+        "Low: consider B12, folate foods.",
+        "High: drink more water; evaluate if persistent."
+    );
+
+    let analysisHTML = analysis.length > 0 
+        ? analysis.map(a => `<div class='analysis-box'>${a}</div>`).join("")
+        : "<div class='analysis-box'>All values are within normal range. Great job!</div>";
+
+    // OUTPUT
+    document.getElementById("output").innerHTML = `
+        <h2>Generated Smart Path Lab Report</h2>
+
+        <table>
+            <tr><th colspan="2" class="section-title">PATIENT INFORMATION</th></tr>
+            <tr><td>Name</td><td>${name}</td></tr>
+            <tr><td>Lab No.</td><td>${labno}</td></tr>
+            <tr><td>Age</td><td>${age}</td></tr>
+            <tr><td>Gender</td><td>${gender}</td></tr>
+            <tr><td>Referred By</td><td>${refby}</td></tr>
+
+            <!-- BMI OUTPUT -->
+            <tr><td><b>BMI</b></td><td>${bmi} (${bmiStatus})</td></tr>
+
+            <!-- ⭐ DAILY CALORIE REQUIREMENT -->
+            <tr><td><b>Daily Calorie Requirement</b></td><td>${calories} kcal/day</td></tr>
+        </table>
+
+        <table>
+            <tr><th colspan="3" class="section-title">CBC RESULTS</th></tr>
+            <tr><td>Hemoglobin</td><td>${c.hemoglobin}</td><td>g/dL</td></tr>
+            <tr><td>PCV</td><td>${c.pcv}</td><td>%</td></tr>
+            <tr><td>RBC Count</td><td>${c.rbc}</td><td>mill/mm³</td></tr>
+            <tr><td>MCV</td><td>${c.mcv}</td><td>fL</td></tr>
+            <tr><td>MCH</td><td>${c.mch}</td><td>pg</td></tr>
+            <tr><td>MCHC</td><td>${c.mchc}</td><td>g/dL</td></tr>
+            <tr><td>RDW</td><td>${c.rdw}</td><td>%</td></tr>
+            <tr><td>TLC</td><td>${c.tlc}</td><td>thou/mm³</td></tr>
+            <tr><td>Platelets</td><td>${c.platelets}</td><td>thou/mm³</td></tr>
+        </table>
+
+        <h3 style="margin-top:20px;">Health Analysis & Suggestions</h3>
+        ${analysisHTML}
+
+        <h3 style="margin-top:20px;">📌 Daily Calorie Requirement Suggestions</h3>
+        <div class="analysis-box">
+            <b>Your Body Needs:</b> ${calories} kcal/day  
+            <br><br>
+            ${calorieSuggestion}
+        </div>
+
+        <div class="safe-note">
+        ⚠ <b>Disclaimer:</b> This tool provides general nutritional suggestions only.  
+        It does NOT diagnose medical conditions. Always consult a qualified doctor for medical advice.
+        </div>
+    `;
+}
+</script>
+</body>
+</html>
