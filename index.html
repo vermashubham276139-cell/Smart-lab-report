@@ -2,181 +2,72 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Smart Path Lab Report – Modern UI</title>
-
+<title>Smart Path Lab Report With Health Analysis</title>
 <style>
-    body {
-        font-family: 'Segoe UI', sans-serif;
-        background: #e9eef5;
-        padding: 30px;
-    }
-
-    .container {
-        max-width: 1000px;
-        margin: auto;
-        background: #ffffff;
-        padding: 30px;
-        border-radius: 14px;
-        box-shadow: 0 6px 25px rgba(0,0,0,0.15);
-    }
-
-    h2, h3 {
-        text-align: center;
-        color: #333;
-        font-weight: 700;
-    }
-
-    label {
-        margin-top: 10px;
-        display: block;
-        font-weight: 600;
-        color: #333;
-    }
-
-    input {
-        width: 100%;
-        padding: 12px;
-        border-radius: 8px;
-        border: 1px solid #bbb;
-        margin-top: 5px;
-        font-size: 15px;
-        transition: 0.2s;
-    }
-
-    input:focus {
-        border-color: #007bff;
-        box-shadow: 0 0 4px #007bff;
-    }
-
-    button {
-        width: 100%;
-        padding: 14px;
-        background: linear-gradient(to right, #007bff, #0056d6);
-        color: white;
-        border: none;
-        font-size: 17px;
-        border-radius: 8px;
-        margin-top: 20px;
-        cursor: pointer;
-        transition: 0.2s;
-        font-weight: bold;
-    }
-
-    button:hover {
-        opacity: 0.9;
-        transform: scale(1.02);
-    }
-
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 25px;
-        border-radius: 10px;
-        overflow: hidden;
-        box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-    }
-
-    th {
-        background: #1f2937;
-        color: white;
-        padding: 12px;
-        font-size: 15px;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-    }
-
-    td {
-        padding: 12px;
-        background: white;
-        border-bottom: 1px solid #ddd;
-    }
-
-    tr:hover td {
-        background: #f5f7fa;
-    }
-
-    .analysis-box {
-        background: #f8fbff;
-        padding: 18px;
-        border-left: 5px solid #007bff;
-        margin-top: 20px;
-        border-radius: 6px;
-        box-shadow: 0 3px 8px rgba(0,0,0,0.06);
-        font-size: 15px;
-    }
-
-    .safe-note {
-        margin-top: 25px;
-        padding: 14px;
-        background: #fff3cd;
-        border-left: 5px solid #ffca3a;
-        font-size: 14px;
-        border-radius: 6px;
-    }
-
-    .section-title {
-        background: #111827 !important;
-        color: white;
-        font-size: 17px;
-        text-align: center;
-        padding: 10px;
-        letter-spacing: 1px;
-    }
+    body { font-family: Arial; background: #f0f0f0; padding: 20px; }
+    .container { max-width: 900px; margin: auto; background: #fff; padding: 25px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.2); }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    th, td { border: 1px solid #999; padding: 8px; }
+    th { background: #eee; }
+    .section-title { background: black; color: white; padding: 8px; font-weight: bold; }
+    label { display: block; margin-top: 8px; }
+    input { width: 100%; padding: 8px; }
+    button { padding: 10px; margin-top: 10px; width: 100%; font-size: 16px; background: #007bff; color: #fff; border: none; border-radius: 5px; cursor: pointer; }
+    .analysis-box { padding: 15px; background: #fafafa; border-left: 4px solid #007bff; margin-top: 20px; }
+    .safe-note { font-size: 13px; color: #555; margin-top: 10px; }
 </style>
 </head>
-
 <body>
-
 <div class="container">
-    <h2>Smart Path Lab Report</h2>
-    <h3>Enter Patient Details</h3>
+<h2>Smart Path Lab Report Generator</h2>
 
-    <!-- Patient Inputs -->
-    <label>Name</label><input id="name">
-    <label>Lab Number</label><input id="labno">
-    <label>Age</label><input id="age">
-    <label>Gender</label><input id="gender">
-    <label>Referred By</label><input id="refby">
+<h3>Enter Patient Details</h3>
+<label>Name</label><input id="name">
+<label>Lab Number</label><input id="labno">
+<label>Age</label><input id="age">
+<label>Gender</label><input id="gender">
+<label>Referred By</label><input id="refby">
 
-    <label>Weight (kg)</label><input id="weight">
-    <label>Height (meters)</label><input id="height">
+<!-- BMI -->
+<label>Weight (kg)</label><input id="weight">
+<label>Height (meters)</label><input id="height">
 
-    <hr style="margin:30px 0; border:0; border-top:2px solid #ddd;">
+<hr>
 
-    <h3>Enter CBC Values</h3>
+<h3>Enter CBC Values</h3>
 
-    <!-- CBC Inputs -->
-    <label>Hemoglobin</label><input id="hemoglobin">
-    <label>PCV</label><input id="pcv">
-    <label>RBC Count</label><input id="rbc">
-    <label>MCV</label><input id="mcv">
-    <label>MCH</label><input id="mch">
-    <label>MCHC</label><input id="mchc">
-    <label>RDW</label><input id="rdw">
-    <label>TLC</label><input id="tlc">
-    <label>Neutrophils (%)</label><input id="neutro">
-    <label>Lymphocytes (%)</label><input id="lymph">
-    <label>Monocytes (%)</label><input id="mono">
-    <label>Eosinophils (%)</label><input id="eos">
-    <label>Basophils (%)</label><input id="baso">
-    <label>Abs. Neutrophils</label><input id="absneutro">
-    <label>Abs. Lymphocytes</label><input id="abslymph">
-    <label>Abs. Monocytes</label><input id="absmono">
-    <label>Abs. Eosinophils</label><input id="abseos">
-    <label>Abs. Basophils</label><input id="absbaso">
-    <label>Platelet Count</label><input id="platelets">
+<label>Hemoglobin</label><input id="hemoglobin">
+<label>PCV</label><input id="pcv">
+<label>RBC Count</label><input id="rbc">
+<label>MCV</label><input id="mcv">
+<label>MCH</label><input id="mch">
+<label>MCHC</label><input id="mchc">
+<label>RDW</label><input id="rdw">
+<label>TLC</label><input id="tlc">
 
-    <button onclick="generateReport()">Generate Report</button>
+<label>Neutrophils (%)</label><input id="neutro">
+<label>Lymphocytes (%)</label><input id="lymph">
+<label>Monocytes (%)</label><input id="mono">
+<label>Eosinophils (%)</label><input id="eos">
+<label>Basophils (%)</label><input id="baso">
 
-    <div id="output"></div>
+<label>Abs. Neutrophils</label><input id="absneutro">
+<label>Abs. Lymphocytes</label><input id="abslymph">
+<label>Abs. Monocytes</label><input id="absmono">
+<label>Abs. Eosinophils</label><input id="abseos">
+<label>Abs. Basophils</label><input id="absbaso">
+
+<label>Platelet Count</label><input id="platelets">
+
+<button onclick="generateReport()">Generate Report</button>
+
+<div id="output"></div>
 </div>
 
 <script>
-/* SAME LOGIC & CALCULATIONS FROM YOUR SCRIPT  
-   — Just UI upgraded. 100% functional.  
-*/
-
 function generateReport() {
+
+    // Collect patient info
     const name = document.getElementById("name").value;
     const labno = document.getElementById("labno").value;
     const age = document.getElementById("age").value;
@@ -189,27 +80,34 @@ function generateReport() {
     // BMI
     let bmi = 0;
     let bmiStatus = "";
-
     if (weight > 0 && height > 0) {
         bmi = (weight / (height * height)).toFixed(2);
-
-        if (bmi < 18.5) bmiStatus = "Underweight — Increase nutritious calories";
-        else if (bmi < 24.9) bmiStatus = "Normal BMI — Maintain healthy routine";
-        else if (bmi < 29.9) bmiStatus = "Overweight — Exercise & reduce sugar";
-        else bmiStatus = "Obese — Weight-management recommended";
+        if (bmi < 18.5) bmiStatus = "Underweight — Increase nutritious calorie intake.";
+        else if (bmi < 24.9) bmiStatus = "Normal BMI — Maintain healthy lifestyle.";
+        else if (bmi < 29.9) bmiStatus = "Overweight — Increase activity & reduce sugars.";
+        else bmiStatus = "Obese — Consider weight management consultation.";
     }
 
-    // TDEE
+    // Calorie requirement (BMR * activity)
     let calories = 0;
     if (weight > 0 && height > 0 && age > 0) {
-        let bmr = 
-            gender.toLowerCase() === "male"
-            ? 10*weight + 6.25*(height*100) - 5*age + 5
-            : 10*weight + 6.25*(height*100) - 5*age - 161;
-
+        let bmr = 0;
+        if (gender.toLowerCase() === "male") {
+            bmr = 10 * weight + 6.25 * (height * 100) - 5 * age + 5;
+        } else {
+            bmr = 10 * weight + 6.25 * (height * 100) - 5 * age - 161;
+        }
         calories = Math.round(bmr * 1.4);
     }
 
+    // Calorie suggestion
+    let calorieSuggestion = "";
+    if (bmi < 18.5) calorieSuggestion = "Increase calorie intake with nuts, dairy, rice, bananas, ghee.";
+    else if (bmi < 24.9) calorieSuggestion = "Maintain balanced diet: fruits, vegetables, lean protein.";
+    else if (bmi < 29.9) calorieSuggestion = "Reduce sugar/fried foods, increase fiber, walk daily.";
+    else calorieSuggestion = "Reduce sugary drinks & carbs; seek weight guidance if needed.";
+
+    // CBC values
     const c = {
         hemoglobin: parseFloat(hemoglobin.value),
         pcv: parseFloat(pcv.value),
@@ -219,63 +117,139 @@ function generateReport() {
         mchc: parseFloat(mchc.value),
         rdw: parseFloat(rdw.value),
         tlc: parseFloat(tlc.value),
-        platelets: parseFloat(platelets.value)
+        neutro: parseFloat(neutro.value),
+        lymph: parseFloat(lymph.value),
+        mono: parseFloat(mono.value),
+        eos: parseFloat(eos.value),
+        baso: parseFloat(baso.value),
+        absneutro: parseFloat(absneutro.value),
+        abslymph: parseFloat(abslymph.value),
+        absmono: parseFloat(absmono.value),
+        abseos: parseFloat(abseos.value),
+        absbaso: parseFloat(absbaso.value),
+        platelets: parseFloat(platelets.value),
     };
 
+    // Reference ranges
     const ref = {
-        hemoglobin:[13,17], pcv:[40,50], rbc:[4.5,5.5], mcv:[80,100],
-        mch:[27,32], mchc:[32,35], rdw:[11.5,14.5], tlc:[4,10], platelets:[150,450]
+        hemoglobin: [13, 17],
+        pcv: [40, 50],
+        rbc: [4.5, 5.5],
+        mcv: [80, 100],
+        mch: [27, 32],
+        mchc: [32, 35],
+        rdw: [11.5, 14.5],
+        tlc: [4, 10],
+        neutro: [40, 75],
+        lymph: [20, 40],
+        mono: [2, 10],
+        eos: [1, 6],
+        baso: [0, 1],
+        absneutro: [1.5, 7.5],
+        abslymph: [1.0, 4.0],
+        absmono: [0.2, 1.0],
+        abseos: [0.02, 0.5],
+        absbaso: [0.0, 0.1],
+        platelets: [150, 450],
     };
 
+    // Analysis
     let analysis = [];
 
-    function checkLowHigh(value, range, label) {
-        if (value < range[0]) analysis.push(`<b>${label} is LOW</b>`);
-        else if (value > range[1]) analysis.push(`<b>${label} is HIGH</b>`);
+    function checkLowHigh(value, range, name, suggestionLow, suggestionHigh) {
+        if (!value) return;
+        if (value < range[0]) {
+            analysis.push(`<b>${name} is LOW.</b><br>${suggestionLow}`);
+        } else if (value > range[1]) {
+            analysis.push(`<b>${name} is HIGH.</b><br>${suggestionHigh}`);
+        }
     }
 
-    for (let key in ref) {
-        checkLowHigh(c[key], ref[key], key.toUpperCase());
-    }
+    // CBC checks
+    checkLowHigh(c.hemoglobin, ref.hemoglobin, "Hemoglobin", "Increase iron-rich foods.", "Stay hydrated; recheck if high.");
+    checkLowHigh(c.pcv, ref.pcv, "PCV", "Consider iron, folate foods.", "Drink more water.");
+    checkLowHigh(c.rbc, ref.rbc, "RBC Count", "Increase iron/B12 foods.", "Hydrate; evaluate if persistent.");
+    checkLowHigh(c.mcv, ref.mcv, "MCV", "Low: possible iron deficiency.", "High: B12/folate deficiency.");
+    checkLowHigh(c.mch, ref.mch, "MCH", "Increase iron foods.", "Check B12/folate intake.");
+    checkLowHigh(c.mchc, ref.mchc, "MCHC", "Possible iron deficiency.", "Could be dehydration.");
+    checkLowHigh(c.rdw, ref.rdw, "RDW", "Usually fine.", "Consider iron/B12/folate foods.");
+    checkLowHigh(c.tlc, ref.tlc, "TLC", "Low WBC: vitamin C foods.", "High WBC: may indicate infection.");
 
-    let analysisHTML = analysis.length
-        ? analysis.map(a => `<div class='analysis-box'>${a}</div>`).join("")
-        : `<div class="analysis-box">All CBC values appear within normal range.</div>`;
+    // WBC differential
+    checkLowHigh(c.neutro, ref.neutro, "Neutrophils %", "Low neutro: risk of infection, hydrate & rest.", "High neutro: may suggest infection.");
+    checkLowHigh(c.lymph, ref.lymph, "Lymphocytes %", "Low lymph: low immunity.", "High lymph: possible viral response.");
+    checkLowHigh(c.mono, ref.mono, "Monocytes %", "Low mono: usually OK.", "High mono: inflammation/infection.");
+    checkLowHigh(c.eos, ref.eos, "Eosinophils %", "Low eosinophils: OK.", "High eos: possible allergy.");
+    checkLowHigh(c.baso, ref.baso, "Basophils %", "Low baso: OK.", "High baso: consider allergy or inflammation.");
 
+    // Absolute differential
+    checkLowHigh(c.absneutro, ref.absneutro, "Absolute Neutrophils", "Low: weakened immunity.", "High: infection.");
+    checkLowHigh(c.abslymph, ref.abslymph, "Absolute Lymphocytes", "Low: low immunity.", "High: viral activity.");
+    checkLowHigh(c.absmono, ref.absmono, "Absolute Monocytes", "Low: usually normal.", "High: inflammation.");
+    checkLowHigh(c.abseos, ref.abseos, "Absolute Eosinophils", "Low: normal.", "High: allergy/worm infection.");
+    checkLowHigh(c.absbaso, ref.absbaso, "Absolute Basophils", "Low: fine.", "High: allergy/inflammation.");
+    checkLowHigh(c.platelets, ref.platelets, "Platelet Count", "Low: B12/folate foods.", "High: hydration required.");
+
+    let analysisHTML =
+        analysis.length > 0
+            ? analysis.map(a => `<div class='analysis-box'>${a}</div>`).join("")
+            : "<div class='analysis-box'>All values are within normal range. Great job!</div>";
+
+    // OUTPUT REPORT
     document.getElementById("output").innerHTML = `
-        <h2 style="margin-top:30px;">Generated Smart Path Lab Report</h2>
+    <h2>Generated Smart Path Lab Report</h2>
 
-        <table>
-            <tr><th colspan="2" class="section-title">Patient Details</th></tr>
-            <tr><td>Name</td><td>${name}</td></tr>
-            <tr><td>Lab Number</td><td>${labno}</td></tr>
-            <tr><td>Age</td><td>${age}</td></tr>
-            <tr><td>Gender</td><td>${gender}</td></tr>
-            <tr><td>Referred By</td><td>${refby}</td></tr>
-            <tr><td>BMI</td><td>${bmi} (${bmiStatus})</td></tr>
-            <tr><td>Daily Calorie Requirement</td><td>${calories} kcal/day</td></tr>
-        </table>
+    <table>
+        <tr><th colspan="2" class="section-title">PATIENT INFORMATION</th></tr>
+        <tr><td>Name</td><td>${name}</td></tr>
+        <tr><td>Lab No.</td><td>${labno}</td></tr>
+        <tr><td>Age</td><td>${age}</td></tr>
+        <tr><td>Gender</td><td>${gender}</td></tr>
+        <tr><td>Referred By</td><td>${refby}</td></tr>
+        <tr><td><b>BMI</b></td><td>${bmi} (${bmiStatus})</td></tr>
+        <tr><td><b>Daily Calorie Requirement</b></td><td>${calories} kcal/day</td></tr>
+    </table>
 
-        <table>
-            <tr><th colspan="3" class="section-title">CBC Results</th></tr>
-            <tr><td>Hemoglobin</td><td>${c.hemoglobin}</td><td>g/dL</td></tr>
-            <tr><td>PCV</td><td>${c.pcv}</td><td>%</td></tr>
-            <tr><td>RBC Count</td><td>${c.rbc}</td><td>mill/mm³</td></tr>
-            <tr><td>MCV</td><td>${c.mcv}</td><td>fL</td></tr>
-            <tr><td>MCH</td><td>${c.mch}</td><td>pg</td></tr>
-            <tr><td>MCHC</td><td>${c.mchc}</td><td>g/dL</td></tr>
-            <tr><td>RDW</td><td>${c.rdw}</td><td>%</td></tr>
-            <tr><td>TLC</td><td>${c.tlc}</td><td>thou/mm³</td></tr>
-            <tr><td>Platelets</td><td>${c.platelets}</td><td>thou/mm³</td></tr>
-        </table>
+    <table>
+        <tr><th colspan="3" class="section-title">CBC RESULTS</th></tr>
 
-        <h3 style="margin-top:20px;">Health Analysis</h3>
-        ${analysisHTML}
+        <tr><td>Hemoglobin</td><td>${c.hemoglobin}</td><td>g/dL</td></tr>
+        <tr><td>PCV</td><td>${c.pcv}</td><td>%</td></tr>
+        <tr><td>RBC Count</td><td>${c.rbc}</td><td>mill/mm³</td></tr>
+        <tr><td>MCV</td><td>${c.mcv}</td><td>fL</td></tr>
+        <tr><td>MCH</td><td>${c.mch}</td><td>pg</td></tr>
+        <tr><td>MCHC</td><td>${c.mchc}</td><td>g/dL</td></tr>
+        <tr><td>RDW</td><td>${c.rdw}</td><td>%</td></tr>
+        <tr><td>TLC</td><td>${c.tlc}</td><td>thou/mm³</td></tr>
 
-        <div class="safe-note">
-            ⚠ <b>Disclaimer:</b> This is not a medical diagnosis tool.  
-            Always consult a certified doctor for accurate evaluation.
-        </div>
+        <tr><td>Neutrophils (%)</td><td>${c.neutro}</td><td>%</td></tr>
+        <tr><td>Lymphocytes (%)</td><td>${c.lymph}</td><td>%</td></tr>
+        <tr><td>Monocytes (%)</td><td>${c.mono}</td><td>%</td></tr>
+        <tr><td>Eosinophils (%)</td><td>${c.eos}</td><td>%</td></tr>
+        <tr><td>Basophils (%)</td><td>${c.baso}</td><td>%</td></tr>
+
+        <tr><td>Abs. Neutrophils</td><td>${c.absneutro}</td><td>thou/mm³</td></tr>
+        <tr><td>Abs. Lymphocytes</td><td>${c.abslymph}</td><td>thou/mm³</td></tr>
+        <tr><td>Abs. Monocytes</td><td>${c.absmono}</td><td>thou/mm³</td></tr>
+        <tr><td>Abs. Eosinophils</td><td>${c.abseos}</td><td>thou/mm³</td></tr>
+        <tr><td>Abs. Basophils</td><td>${c.absbaso}</td><td>thou/mm³</td></tr>
+
+        <tr><td>Platelet Count</td><td>${c.platelets}</td><td>thou/mm³</td></tr>
+    </table>
+
+    <h3 style="margin-top:20px;">Health Analysis & Suggestions</h3>
+    ${analysisHTML}
+
+    <h3 style="margin-top:20px;">📌 Daily Calorie Requirement Suggestions</h3>
+    <div class="analysis-box">
+        <b>Your Body Needs:</b> ${calories} kcal/day <br><br>
+        ${calorieSuggestion}
+    </div>
+
+    <div class="safe-note">
+        ⚠ <b>Disclaimer:</b> This tool provides general nutritional suggestions only.
+        It does NOT diagnose medical conditions. Consult a doctor for medical advice.
+    </div>
     `;
 }
 </script>
